@@ -2,7 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.tzutalin.vision.visionrecognition" >
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_MEDIA_STORAGE" />
+
     <!-- CAMERA -->
     <uses-permission android:name="android.permission.CAMERA" />
 
@@ -23,12 +26,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name="com.tzutalin.vision.demo.SceneRecognitionActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:label="@string/title_activity_scene_recognition" >
         </activity>
+
         <activity
             android:name="com.tzutalin.vision.demo.ObjectDetectActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"

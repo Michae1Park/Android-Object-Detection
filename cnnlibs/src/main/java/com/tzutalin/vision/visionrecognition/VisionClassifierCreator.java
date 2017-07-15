@@ -17,23 +17,22 @@
 package com.tzutalin.vision.visionrecognition;
 
 import android.content.Context;
+import android.os.Environment;
 import android.support.annotation.NonNull;
-
-import java.io.File;
 
 /**
  * Create an instance using default instances for vision recognition and detection
  */
 public final class VisionClassifierCreator {
-    private final static String SCENE_MODEL_PATH = "/sdcard/phone_data/vision_scene/mit/deploy_places205_mem.protxt";
-    private final static String SCENE_WIEGHTS_PATH = "/sdcard/phone_data/vision_scene/mit/googlelet_places205_train_iter_2400000.caffemodel";
+    private final static String SCENE_MODEL_PATH = "/phone_data/vision_scene/mit/deploy_places205_mem.protxt";
+    private final static String SCENE_WIEGHTS_PATH = "/phone_data/vision_scene/mit/googlelet_places205_train_iter_2400000.caffemodel";
     private final static String SCENE_MEAN_FILE = null;
-    private final static String SCENE_SYNSET_FILE = "/sdcard/phone_data/vision_scene/mit/mit_category_table";
+    private final static String SCENE_SYNSET_FILE = "/phone_data/vision_scene/mit/mit_category_table";
 
-    private final static String DETECT_MODEL_PATH = "/sdcard/phone_data/fastrcnn/deploy.prototxt";
-    private final static String DETECT_WIEGHTS_PATH = "/sdcard/phone_data/fastrcnn/caffenet_fast_rcnn_iter_40000.caffemodel";
-    private final static String DETECT_MEAN_FILE = "/sdcard/phone_data/fastrcnn/imagenet_mean.binaryproto";
-    private final static String DETECT_SYNSET_FILE = "/sdcard/phone_data/fastrcnn/fastrcnn_synset";
+    private final static String DETECT_MODEL_PATH = "mnt/extSdCard/phone_data/fastrcnn/deploy.prototxt";
+    private final static String DETECT_WIEGHTS_PATH = "mnt/extSdCard/phone_data/fastrcnn/caffenet_fast_rcnn_iter_40000.caffemodel";
+    private final static String DETECT_MEAN_FILE = "mnt/extSdCard/phone_data/fastrcnn/imagenet_mean.binaryproto";
+    private final static String DETECT_SYNSET_FILE = "mnt/extSdCard/phone_data/fastrcnn/fastrcnn_synset";
 
     private VisionClassifierCreator() throws InstantiationException {
         throw new InstantiationException("This class is not for instantiation");
@@ -45,7 +44,12 @@ public final class VisionClassifierCreator {
      */
     @NonNull
     public static SceneClassifier createSceneClassifier(@NonNull Context context) throws IllegalAccessException {
-        return new SceneClassifier(context, SCENE_MODEL_PATH, SCENE_WIEGHTS_PATH, SCENE_MEAN_FILE, SCENE_SYNSET_FILE);
+        String model_p = Environment.getExternalStorageDirectory().getPath() + SCENE_MODEL_PATH;
+        String weight_p = Environment.getExternalStorageDirectory().getPath() + SCENE_WIEGHTS_PATH;
+        String synset_p = Environment.getExternalStorageDirectory().getPath() + SCENE_SYNSET_FILE;
+
+        return new SceneClassifier(context, model_p, weight_p, SCENE_MEAN_FILE, synset_p);
+//        return new SceneClassifier(context, SCENE_MODEL_PATH, SCENE_WIEGHTS_PATH, SCENE_MEAN_FILE, SCENE_SYNSET_FILE);
     }
 
     /**

@@ -18,14 +18,13 @@ package com.tzutalin.vision.visionrecognition;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -45,16 +44,71 @@ public class SceneClassifier extends CaffeClassifier<List<VisionDetRet>> {
      * @param context          Context
      * @param sceneModelPath   Caffe's model
      * @param sceneWieghtsPath Caffe's trained wieght
-     * @param sceneManefile    The file path of the image image
+     * @param sceneMeanfile    The file path of the image image
      * @param sceneSynsetFile  The file path to load label's titles
      */
-    public SceneClassifier(Context context, String sceneModelPath, String sceneWieghtsPath, String sceneManefile, String sceneSynsetFile) throws IllegalAccessException {
-        super(context, sceneModelPath, sceneWieghtsPath, sceneManefile, sceneSynsetFile);
+    public SceneClassifier(Context context, String sceneModelPath, String sceneWieghtsPath, String sceneMeanfile, String sceneSynsetFile) throws IllegalAccessException {
+        super(context, sceneModelPath, sceneWieghtsPath, sceneMeanfile, sceneSynsetFile);
+
+//        if(!isExternalStorageWritable()) {
+//            Log.d(TAG, "sdcard not writable");
+//        }
+//        if(!isExternalStorageReadable()) {
+//            Log.d(TAG, "sdcard not Readable");
+//        }
+//
+//        Log.d(TAG, String.valueOf(Environment.getExternalStorageDirectory()));
+//        Log.d(TAG, Environment.getExternalStorageDirectory().getPath());
+//        if(new File("/storage/extSdCard/").exists())
+//        {
+//            String sdpath="/storage/extSdCard/";
+//            Log.d("Sd Cardext Path",sdpath);
+//        }
+//        if(new File("/storage/sdcard1/").exists())
+//        {
+//            String sd1path="/storage/sdcard1/";
+//            Log.d("Sd Card1 Path",sd1path);
+//        }
+//        if(new File("/storage/usbcard1/").exists())
+//        {
+//            String usbdiskpath="/storage/usbcard1/";
+//            Log.d("USB Path",usbdiskpath);
+//        }
+//        if(new File("/storage/sdcard0/").exists())
+//        {
+//            String sd0path="/storage/sdcard0/";
+//            Log.d("Sd Card0 Path",sd0path);
+//        }
+//        String  s = "storage/Card/phone_data";
+//        Log.d(TAG, String.valueOf(new File(s).exists()));
+//        Log.d(TAG, String.valueOf(new File(mModelPath).exists()));
+//        Log.d(TAG, String.valueOf(new File(mWeightsPath).exists()));
+//        Log.d(TAG, String.valueOf(new File(mSynsetPath).exists()));
+
         if (!new File(mModelPath).exists() ||
                 !new File(mWeightsPath).exists() ||
                 !new File(mSynsetPath).exists() ) {
             throw new IllegalAccessException("SceneClassifier cannot find model");
         }
+    }
+
+    /* Checks if external storage is available for read and write */
+    public boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            return true;
+        }
+        return false;
+    }
+
+    /* Checks if external storage is available to at least read */
+    public boolean isExternalStorageReadable() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state) ||
+                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
+            return true;
+        }
+        return false;
     }
 
     /**

@@ -142,7 +142,7 @@ public class ObjectDetectActivity extends Activity {
             // TODO: Remvoe it
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 4;
-            String retImgPath = "/sdcard/temp.jpg";
+            String retImgPath = "/Card/temp.jpg";
             Bitmap bitmap = BitmapFactory.decodeFile(retImgPath, options);
 
             Drawable d = new BitmapDrawable(getResources(), bitmap);

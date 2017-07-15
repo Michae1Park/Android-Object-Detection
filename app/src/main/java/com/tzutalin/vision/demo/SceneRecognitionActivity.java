@@ -30,13 +30,13 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.widget.Toast;
 
+import com.dexafree.materialList.card.Card;
+import com.dexafree.materialList.card.provider.BigImageCardProvider;
+import com.dexafree.materialList.view.MaterialListView;
 import com.tzutalin.vision.visionrecognition.R;
 import com.tzutalin.vision.visionrecognition.SceneClassifier;
 import com.tzutalin.vision.visionrecognition.VisionClassifierCreator;
 import com.tzutalin.vision.visionrecognition.VisionDetRet;
-import com.dexafree.materialList.card.Card;
-import com.dexafree.materialList.card.provider.BigImageCardProvider;
-import com.dexafree.materialList.view.MaterialListView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -62,7 +62,7 @@ public class SceneRecognitionActivity extends Activity {
             return;
         }
 
-        PredictTask task = new PredictTask();
+        PredictTask task = new PredictTask();   //getting stuck inside this call trace
         task.execute(imgPath);
 
         BitmapFactory.Options options = new BitmapFactory.Options();
@@ -114,11 +114,13 @@ public class SceneRecognitionActivity extends Activity {
     // ==========================================================
     private class PredictTask extends AsyncTask<String, Void, List<VisionDetRet>> {
         private ProgressDialog mmDialog;
+        //private ProgressBar mLoadingIndicator;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            mmDialog = ProgressDialog.show(SceneRecognitionActivity.this, getString(R.string.dialog_wait),getString(R.string.dialog_scene_decscription), true);
+            //mLoadingIndicator.setVisibility(View.VISIBLE);
+            mmDialog = ProgressDialog.show(SceneRecognitionActivity.this, "wait", "recognition", true);//getString(R.string.dialog_wait),getString(R.string.dialog_scene_decscription), true);
         }
 
         @Override

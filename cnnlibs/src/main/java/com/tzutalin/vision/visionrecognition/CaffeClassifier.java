@@ -18,13 +18,13 @@ package com.tzutalin.vision.visionrecognition;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.os.Environment;
 import android.text.TextUtils;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
